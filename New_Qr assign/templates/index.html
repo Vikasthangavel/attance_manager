@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>QR Code Scanner</title>
+    <script>
+        async function scanOldQR() {
+            let response = await fetch("/scan_old_qr");
+            let data = await response.json();
+            document.getElementById("oldQR").value = data.oldQR;
+        }
+
+        async function scanNewQR() {
+            let response = await fetch("/scan_new_qr");
+            let data = await response.json();
+            document.getElementById("newQR").value = data.newQR;
+        }
+
+        async function updateQR() {
+            let oldQR = document.getElementById("oldQR").value;
+            let newQR = document.getElementById("newQR").value;
+
+            if (!oldQR || !newQR) {
+                alert("Please scan both QR codes.");
+                return;
+            }
+
+            let response = await fetch("/update_qr", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ oldQR, newQR })
+            });
+
+            let result = await response.json();
+            alert(result.message);
+        }
+    </script>
+</head>
+<body >
+    <h1>QR Code Scanner</h1>
+    
+    <label>Old QR Code:</label>
+    <input type="text" id="oldQR" readonly>
+    <button onclick="scanOldQR()">Scan Old QR</button>
+    
+    <br><br>
+
+    <label>New QR Code:</label>
+    <input type="text" id="newQR" readonly>
+    <button onclick="scanNewQR()">Scan New QR</button>
+
+    <br><br>
+
+    <button onclick="updateQR()">Update Google Sheets</button>
+</body>
+<style>
+body {
+    background-color: aqua;
+}
+</style>
+</html>
