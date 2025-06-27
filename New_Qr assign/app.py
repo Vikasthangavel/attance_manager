@@ -7,7 +7,7 @@ from pyzbar.pyzbar import decode
 app = Flask(__name__)
 
 # Your Google Apps Script Web App URL
-SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywY8lU0LMWhwyfCBJVL0v430xQZKNOTGevpkHWumJzbQlgo5B1icnC2ztaSf_GzAAv/exec"
+SCRIPT_URL = "https://script.google.com/macros/s/AKfzAAv/exec"
 
 def scan_qr():
     cap = cv2.VideoCapture(0)  # Open webcam
